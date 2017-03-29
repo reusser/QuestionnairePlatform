@@ -1,0 +1,100 @@
+$orange: #ee7419;
+$lightorange: #fcf0e5;
+$green: #9fef96;
+.qs-list {
+  width: 104rem;
+  margin: 50px auto;
+  color: #666;
+  font-size: 1.6rem;
+  background-color: #fff;
+  ul {
+    height: 6rem;
+    margin: {
+      left: 2rem;
+      right: 2rem;
+    }
+    list-style: none;
+    line-height: 6rem;
+    border-bottom: 1px solid #eee;
+    &:hover {
+      background-color: $lightorange;
+    }
+    &:nth-of-type(1) {
+      background-color: #efefef;
+      padding: {
+        left: 2rem;
+        right: 2rem;
+      }
+      margin: 0;
+    }
+    li {
+      display: inline-block;
+      &:nth-of-type(1) {
+        width: 5rem;
+        text-align: center;
+      }
+      &:nth-of-type(2) {
+        width: 35rem;
+      }
+      &:nth-of-type(3) {
+        width: 15rem;
+      }
+      &:nth-of-type(4) {
+        width: 10rem;
+      }
+      &:nth-of-type(5) {
+        width: 30rem;
+        span {
+          display: inline-block;
+          height: 2.5rem;
+          width: 9.5rem;
+          margin-left: 15rem;
+          line-height: 2.5rem;
+          font-size: 1.4rem;
+          text-align: center;
+          color: #fff;
+          border: 1px solid $orange;
+          border-radius: .3rem;
+          background-color: $orange;
+          cursor: pointer;
+          &:hover {
+            box-shadow: 0 0 5px $orange;
+          }
+        }
+      }
+    }
+  }
+  .inissue {
+    color: $green;
+  }
+  button {
+    width: 7rem;
+    height: 2.5rem;
+    padding: {
+      top: .3rem;
+      bottom: .3rem;
+    }
+    line-height: 100%;
+    color: #777;
+    border: 1px solid #555;
+    border-radius: .2rem;
+    background-color: #fff;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 4px #ccc;
+    }
+  }
+  .list-bottom {
+    height: 8rem;
+    margin: 2rem;
+    label {
+      margin: {
+        left: 1.8rem;
+        right: 4rem;
+      }
+      input {
+        margin-right: 2.3rem;
+      }
+    }
+  }
+}

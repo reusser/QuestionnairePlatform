@@ -3,13 +3,17 @@
   margin: 0;
 }
 html {
+  height: 100%;
   font-size: 62.5%;
 }
 body {
+  height: 100%;
   font-size: 1.4rem;
 }
 #app {
+  height: 100%;
   font-family: Helvetica,'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #efefef;
 }
