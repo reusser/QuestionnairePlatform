@@ -7,10 +7,12 @@
 import storage from '../store.js'
 
 /**
- * A module that define qs-list router view
- * @exports qs-list
- * @author oyh
- */
+  *
+  * Rowphoto v0.0.1
+  * desciption, by StevenYu.
+  * use with rowphoto.css
+  * @author StevenYu
+  */
   export default {
     name: 'qsList',
     data() {
