@@ -1,6 +1,6 @@
 # questionnaire-platform
 
-> a QuestionnairePlatform by vue
+> a simple QuestionnairePlatform by vue
 
 ## Build Setup
 
