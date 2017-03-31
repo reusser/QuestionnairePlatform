@@ -16,7 +16,7 @@
         <li>
           <button @click="edit(item)">编辑</button>
           <button @click="deleteHandler(item.num)">删除</button>
-          <button @click="watchList(item)">查看问卷</button>
+          <button>查看问卷</button>
           <button @click="watchData(item)">查看数据</button>
         </li>
       </ul>
@@ -110,8 +110,6 @@ import storage from '../store.js'
         } else {
           this.info = '只有未发布的问卷才能编辑';
         }
-      },
-      watchList(item) {
       },
       watchData(item) {
         if (item.state === 'noissue') {
