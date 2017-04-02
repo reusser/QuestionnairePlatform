@@ -14,15 +14,16 @@
         <li>{{item.time}}</li>
         <li :class="item.state === 'inissue' ? 'inissue' : ''">{{item.stateTitle}}</li>
         <li>
-          <button @click="edit(item)">编辑</button>
-          <button @click="deleteHandler(item.num)">删除</button>
+          <button @click="iterator = edit(item); iterator.next()">编辑</button>
+          <button @click="iterator = delItem(item.num); iterator.next()">删除</button>
           <button>查看问卷</button>
-          <button @click="watchData(item)">查看数据</button>
+          <button @click="iterator = watchData(item); iterator.next()">查看数据</button>
         </li>
       </ul>
     </template>
     <div class="list-bottom" v-if="qsList.length == 0 ? false : true">
-      <label><input type="checkbox" id="all-check" v-model="selectAll">全选</label> <button @click="deleteHandler()">删除</button>
+      <label><input type="checkbox" id="all-check" v-model="selectAll">全选</label>
+      <button @click="iterator = delItems(); iterator.next()">删除</button>
     </div>
     <transition name="fade">
       <div class="add-qs" v-if="qsList.length === 0">
@@ -37,7 +38,7 @@
         </header>
         <p>{{info}}</p>
         <div class="btn-box">
-          <button class="yes" @click="selectDelete()">确定</button>
+          <button class="yes" @click="iterator.next();">确定</button>
           <button @click="showDialog = false">取消</button>
         </div>
       </div>
@@ -59,7 +60,7 @@ import storage from '../store.js'
       return {
         qsList: [],
         showDialog: false,
-        delArg: '',
+        iterator: {},
         info: ''
       }
     },
@@ -76,47 +77,64 @@ import storage from '../store.js'
       }
     },
     methods: {
-      deleteHandler(arg) {
+      showDialogMsg(info) {
         this.showDialog = true;
-        this.delArg = arg;
-        this.info = '确认要删除此问卷?';
+        this.info = info;
       },
-      selectDelete() {
-        if (this.delArg) this.delItem(this.delArg);
-        else this.delItems();
-        this.showDialog = false;
-      },
-      delItem(num) {
-        let index = 0;
-        for (let length = this.qsList.length; index < length; index++) {
-          if (this.qsList[index].num === num) break;
-        }
-        this.qsList.splice(index, 1);
-      },
-      delItems() {
-        if (this.selectAll) {
-          this.qsList = [];
-          return;
-        }
-        if (this.selectGroup == []) return;
+      *delItem(num) {
+        yield this.showDialogMsg('确认要删除此问卷')
 
-        this.selectGroup.forEach( item => {
-          if (this.qsList.indexOf(item) > -1) this.qsList.splice(this.qsList.indexOf(item), 1);
-        } )
+        yield (() => {
+          let index = 0;
+          for (let length = this.qsList.length; index < length; index++) {
+            if (this.qsList[index].num === num) break;
+          }
+          this.qsList.splice(index, 1);
+          this.showDialog = false;
+        })();
       },
-      edit(item) {
-        if (item.state !== 'noissue') {
-          this.info = '确认要编辑?';
-        } else {
-          this.info = '只有未发布的问卷才能编辑';
-        }
+      *delItems() {
+        yield this.showDialogMsg('确认要删除选中的问卷？');
+
+        yield (() => {
+          this.showDialog = false;
+          if (this.selectAll) {
+            this.qsList = [];
+            return;
+          }
+          if (this.selectGroup == []) return;
+
+          this.selectGroup.forEach( item => {
+            if (this.qsList.indexOf(item) > -1) this.qsList.splice(this.qsList.indexOf(item), 1);
+          } )
+        })();     
       },
-      watchData(item) {
-        if (item.state === 'noissue') {
-          this.info = '未发布的问卷无数据可查看';
-        } else {
-          //do something
-        }
+      *edit(item) {
+        yield (() => {
+          if (item.state === 'noissue') {
+            this.showDialogMsg('确认要编辑？');
+          } else {
+            this.showDialogMsg('只有未发布的问卷才能编辑');
+          }
+        })();
+        yield (() => {
+          if (item.state !== 'noissue') {
+            this.showDialog = false;
+            //跳转到编辑页
+          } else {
+            this.showDialog = false;
+          }
+        })();
+      },
+      *watchData(item) {
+        yield (() => {
+          if (item.state === 'noissue') {
+            this.showDialogMsg('未发布的问卷无数据可查看');
+          } else {
+            //跳到查看数据页
+          }
+        })();
+        yield this.showDialog = false;
       }
     },
     computed: {
