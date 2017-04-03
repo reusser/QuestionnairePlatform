@@ -131,7 +131,7 @@ import storage from '../store.js'
           if (item.state === 'noissue') {
             this.showDialogMsg('未发布的问卷无数据可查看');
           } else {
-            //跳到查看数据页
+            
           }
         })();
         yield this.showDialog = false;
