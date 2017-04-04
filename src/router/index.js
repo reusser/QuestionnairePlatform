@@ -6,6 +6,7 @@ import qsData from '@/components/QS-data'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -13,7 +14,7 @@ export default new Router({
       component: qsList
     },
     {
-      path: '/data',
+      path: '/data/:num',
       name: 'qsData',
       component: qsData
     }
