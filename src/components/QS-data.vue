@@ -1,7 +1,7 @@
 <template>
   <div class="data-container">
     <span>&lt; 返回</span>
-    <h2>{{item.title}}</h2>
+    <h3>{{item.title}}</h3>
     <div class="error" v-if="isError">
       404 Not Found
     </div>
