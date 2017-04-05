@@ -1,0 +1,80 @@
+$orange: #ee7419;
+.data-container {
+  width: 100rem;
+  padding: 5rem;
+  margin: 5rem auto;
+  color: #666;
+  background-color: #fff;
+  border-radius: .4rem;
+  box-shadow: 0 0 1rem #aaa;
+  .back {
+    font-size: 1.6rem;
+    cursor: pointer;
+    &:hover {
+      color: $orange;
+    }
+  }
+  > {
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #555;
+    }
+    p {
+      text-align: center;
+    }
+  }
+  .content {
+    padding: 3rem;
+    margin-top: 2rem;
+    border: {
+      top: .2rem solid #aaa;
+      bottom: .2rem solid #aaa;
+    }
+  }
+  .content-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: .2rem solid #aaa;
+    p {
+      margin-bottom: 1rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .item-left {
+      width: 35rem;
+      .option {
+        margin-left: 3rem;
+      }
+    }
+    .item-right {
+      width: 35rem;
+      .progress-bar {
+        display: inline-block;
+        width: 25rem;
+        height: 1rem;
+        margin-bottom: 1.5rem;
+        &:nth-last-of-type(1) {
+          margin-bottom: 0;
+        }
+        border: 2px solid #aaa;
+        .bar-inner {
+          height: 100%;
+          background-color: $orange;
+        }
+      }
+      .percent {
+        margin-left: 1rem;
+        vertical-align: top;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

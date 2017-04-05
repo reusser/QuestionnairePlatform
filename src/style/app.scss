@@ -12,8 +12,7 @@ body {
 }
 #app {
   height: 100%;
-  font-family: 'Helvetica Neue','Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow: auto;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   background-color: #efefef;
 }

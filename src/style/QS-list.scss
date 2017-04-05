@@ -6,14 +6,6 @@ $green: #9fef96;
   margin: 50px auto;
   color: #666;
   font-size: 1.6rem;
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter,
-  .fade-leave-active {
-    opacity: 0;
-  }
   ul {
     height: 6rem;
     margin: {

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <router-link to="/data">问卷管理</router-link>
+    <router-link to="/">问卷管理</router-link>
     <router-link to="/">我的问卷</router-link>
   </div>
 </template>
