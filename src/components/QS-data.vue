@@ -31,6 +31,10 @@
               </div>
               <span class="percent">85%</span>
           </div>
+          <div class="item-right" v-else>
+            <p>数据占比</p>
+            
+          </div>
         </div>
       </template>
     </div>
