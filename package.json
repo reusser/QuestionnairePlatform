@@ -9,6 +9,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "echarts": "3.5.2",
     "vue": "^2.2.2",
     "vue-router": "^2.2.0"
   },

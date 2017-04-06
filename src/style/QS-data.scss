@@ -1,4 +1,5 @@
 $orange: #ee7419;
+$lightorange: #fcf0e5;
 .data-container {
   width: 100rem;
   padding: 5rem;
@@ -61,10 +62,14 @@ $orange: #ee7419;
         width: 25rem;
         height: 1rem;
         margin-bottom: 1.5rem;
+        border: 2px solid #aaa;
+        cursor: pointer;
         &:nth-last-of-type(1) {
           margin-bottom: 0;
         }
-        border: 2px solid #aaa;
+        &:hover .bar-inner {
+          background-color: #ff9f50;
+        }
         .bar-inner {
           height: 100%;
           background-color: $orange;
@@ -74,6 +79,14 @@ $orange: #ee7419;
         margin-left: 1rem;
         vertical-align: top;
         font-size: 1.2rem;
+      }
+      div[id^="chart"] {
+        width: 30rem;
+        height: 18rem;
+        margin: {
+          top: -2rem;
+          left: -5rem;
+        }
       }
     }
   }

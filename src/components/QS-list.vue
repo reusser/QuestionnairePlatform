@@ -72,6 +72,7 @@ import storage from '../store.js'
           'question': [
             {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'options': ['选项一', '选项二']},
             {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'options': ['选项一', '选项二', '选项三', '选项四']},
+            {'num': 'Q4', 'title': '多选题', 'type': 'checkbox', 'options': ['选项一', '选项二', '选项三', '选项四','选项5', '选项6', '选项7', '选项8']},
             {'num': 'Q3', 'title': '文本题', 'type': 'textarea'}
           ]},
 

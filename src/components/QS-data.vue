@@ -7,13 +7,11 @@
     </template>
 
     <div class="content" v-if="!isError">
-      <template v-for="item in qsItem.question">
+      <template v-for="(item, index) in qsItem.question">
         <div class="content-item">
           <div class="item-left">
             <p>{{item.num}} &nbsp; {{item.title}}</p>
-            <template v-for="option in item.options">
-              <p class="option">{{option}}</p>
-            </template>
+              <p class="option" v-for="option in item.options">{{option}}</p>
           </div>
           <div class="item-right" v-if="item.type === 'radio'">
             <p>数据占比</p>
@@ -31,9 +29,11 @@
               </div>
               <span class="percent">85%</span>
           </div>
-          <div class="item-right" v-else>
+          <div class="item-right" v-else-if="item.type === 'checkbox'">
             <p>数据占比</p>
-            
+            <div :id="`chart-${item.num}`">
+              {{renderChart(item, item.num)}}
+            </div>
           </div>
         </div>
       </template>
@@ -46,6 +46,10 @@
 
 <script>
 import storage from '../store.js'
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/toolbox'
 /**
  * A module that define qs-data router view
  * @exports qs-data
@@ -57,11 +61,66 @@ import storage from '../store.js'
       return {
         qsItem: {},
         qsList: storage.get(),
-        isError: false
+        isError: false,
+        chartData: [],
+        chartNum: [],
+        chartDataGroup: []
       }
     },
     created() {
       this.fetchData()
+    },
+    mounted() {
+      let myChart = echarts.init(document.getElementById(`chart-${this.chartNum}`))
+      let option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}选择人次 : {c} ({d}%)"
+        },
+        series: [
+          {
+            name: '数据占比',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: this.chartData
+          }
+        ],
+        itemStyle: {
+          emphasis: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+
+      let currentIndex = -1;
+
+      setInterval(function () {
+        var dataLen = option.series[0].data.length;
+
+        myChart.dispatchAction({
+          type: 'downplay',
+          seriesIndex: 0,
+          dataIndex: currentIndex
+        });
+        currentIndex = (currentIndex + 1) % dataLen;
+
+        myChart.dispatchAction({
+          type: 'highlight',
+          seriesIndex: 0,
+          dataIndex: currentIndex
+        });
+
+        myChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          dataIndex: currentIndex
+        });
+      }, 1000);
+
+      myChart.setOption(option)
     },
     methods: {
       fetchData() {
@@ -85,10 +144,36 @@ import storage from '../store.js'
             return '0%'
           }
         }
+      },
+      renderChart(item, num) {
+        this.chartData.push(item)
+        this.chartNum.push(num)
+        /*let value = 0
+        let sum = 0
+        let data = []
+        let length = item.options.length
+
+        item.options.forEach((optionName, index) => {
+          if (index == length - 1) {
+            value = 1001 - sum
+          } else {
+            value = Math.floor(Math.random() * (1001 - sum))
+            sum += value
+          }
+          data.push({value: value, name: optionName})
+        })
+
+        this.chartData = data
+        this.chartNum  = num*/
       }
     },
     watch: {
-      '$route': 'fetchData'
+      '$route': 'fetchData',
+      chartData: {
+        handler(newVal, oldVal) {
+          this.chartDataGroup.push(newVal)
+        }
+      }
     }
   }
 </script>
