@@ -1,7 +1,7 @@
 <template>
   <div class="data-container">
     <template v-if="!isError">
-      <span class="back">&lt; 返回</span>
+      <span class="back" @click="goBack()">&lt; 返回</span>
       <h2>{{qsItem.title}}</h2>
       <p>此统计分析只包含完整回收的数据(数据皆为自制数据模拟来mock数据)</p>
     </template>
@@ -32,7 +32,6 @@
           <div class="item-right" v-else-if="item.type === 'checkbox'">
             <p>数据占比</p>
             <div :id="`chart-${item.num}`">
-              {{renderChart(item, item.num)}}
             </div>
           </div>
         </div>
@@ -63,64 +62,17 @@ import 'echarts/lib/component/toolbox'
         qsList: storage.get(),
         isError: false,
         chartData: [],
-        chartNum: [],
-        chartDataGroup: []
+        chartNum: []
       }
     },
     created() {
       this.fetchData()
     },
     mounted() {
-      let myChart = echarts.init(document.getElementById(`chart-${this.chartNum}`))
-      let option = {
-        tooltip: {
-          trigger: 'item',
-          formatter: "{a} <br/>{b}选择人次 : {c} ({d}%)"
-        },
-        series: [
-          {
-            name: '数据占比',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: this.chartData
-          }
-        ],
-        itemStyle: {
-          emphasis: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
-        }
-      }
-
-      let currentIndex = -1;
-
-      setInterval(function () {
-        var dataLen = option.series[0].data.length;
-
-        myChart.dispatchAction({
-          type: 'downplay',
-          seriesIndex: 0,
-          dataIndex: currentIndex
-        });
-        currentIndex = (currentIndex + 1) % dataLen;
-
-        myChart.dispatchAction({
-          type: 'highlight',
-          seriesIndex: 0,
-          dataIndex: currentIndex
-        });
-
-        myChart.dispatchAction({
-          type: 'showTip',
-          seriesIndex: 0,
-          dataIndex: currentIndex
-        });
-      }, 1000);
-
-      myChart.setOption(option)
+      this.renderChartData()
+      this.chartNum.forEach( (chartNum, index) => {
+        this.renderEChart(chartNum, this.chartData[index])
+      } )
     },
     methods: {
       fetchData() {
@@ -145,35 +97,87 @@ import 'echarts/lib/component/toolbox'
           }
         }
       },
-      renderChart(item, num) {
-        this.chartData.push(item)
-        this.chartNum.push(num)
-        /*let value = 0
-        let sum = 0
-        let data = []
-        let length = item.options.length
+      renderChartData() {  
+        this.qsItem.question.forEach( item => {
+          if (item.type === 'checkbox') {
+            let value  = 0
+            let sum    = 0
+            let data   = []
+            let length = item.options.length
 
-        item.options.forEach((optionName, index) => {
-          if (index == length - 1) {
-            value = 1001 - sum
-          } else {
-            value = Math.floor(Math.random() * (1001 - sum))
-            sum += value
+            this.chartNum.push(item.num);
+
+            item.options.forEach( (optionName, index) => {
+              if (index == length - 1) {
+                value = 1000 - sum
+              } else {
+                value = Math.floor(Math.random() * (1001 - sum))
+                sum += value
+              }
+              data.push({value: value, name: optionName})
+            } )
+            this.chartData.push(data)
           }
-          data.push({value: value, name: optionName})
-        })
-
-        this.chartData = data
-        this.chartNum  = num*/
+        } )
+      },
+      renderEChart(chartNum, chartData) {
+        let myChart = echarts.init(document.getElementById(`chart-${chartNum}`))
+        let option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}选择人次 : {c} ({d}%)"
+          },
+          series: [
+            {
+              name: '数据占比',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '60%'],
+              data: chartData
+            }
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+  
+        let currentIndex = -1;
+  
+        setInterval(function () {
+          var dataLen = option.series[0].data.length;
+  
+          myChart.dispatchAction({
+            type: 'downplay',
+            seriesIndex: 0,
+            dataIndex: currentIndex
+          });
+          currentIndex = (currentIndex + 1) % dataLen;
+  
+          myChart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: currentIndex
+          });
+  
+          myChart.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 0,
+            dataIndex: currentIndex
+          });
+        }, 1000);
+  
+        myChart.setOption(option)
+      },
+      goBack() {
+        this.$router.push({path:'/'})
       }
     },
     watch: {
       '$route': 'fetchData',
-      chartData: {
-        handler(newVal, oldVal) {
-          this.chartDataGroup.push(newVal)
-        }
-      }
     }
   }
 </script>

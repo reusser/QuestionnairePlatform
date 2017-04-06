@@ -149,7 +149,7 @@ import storage from '../store.js'
           if (item.state === 'noissue') {
             this.showDialogMsg('未发布的问卷无数据可查看');
           } else {
-            this.$router.push({ path: '/data/' + item.num, params: { num: item.num }})
+            this.$router.push({ name: 'qsData', params: { num: item.num }})
           }
         })();
         yield this.showDialog = false;
