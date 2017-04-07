@@ -1,11 +1,9 @@
 <template>
-  <div class="calendar-input-container" v-show="show" 
-  :class="[isRed ? 'red-theme' : 'blue-theme']" 
+  <div class="calendar-input-container orange-theme" v-show="show" 
   :style="containerStyle">
 
     <label for="calendar-input">
-
-      <input ref="mainInput" class="calendar-input" type="text" readonly="readonly" 
+      <input ref="mainInput" class="calendar-input" type="text" readonly="readonly"
       :class="{focus: isfocus}"
       @click="focus"
       v-model="selectValue">
@@ -50,10 +48,6 @@ export default {
       type: Boolean,
       default: true
     },
-    isRed: {  //红蓝两种主题可选
-      type: Boolean,
-      default: false
-    },
     limit: {  //日期可选范围
       type: Object,
       default() {
@@ -77,7 +71,7 @@ export default {
   },
   data () {
     return {
-      isfocus: true,
+      isfocus: false,
       changeShowCalendar: this.showCalendar,
       week: ["日", "一", "二", "三", "四", "五", "六"],
       date: new Date(),
@@ -225,5 +219,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import "../style/calender";
+@import '../style/calendar';
 </style>

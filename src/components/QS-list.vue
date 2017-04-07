@@ -155,9 +155,9 @@ import storage from '../store.js'
         yield (() => {
           if (item.state !== 'noissue') {
             this.showDialog = false;
-            //跳转到编辑页
           } else {
             this.showDialog = false;
+            this.$router.push({name: 'qsEdit', params: { num: item.num }})
           }
         })();
       },

@@ -1,9 +1,6 @@
-$blue: #9ecaed;
-$deepBlue: #2f80c3;
-$white: #fff;
-$gray: #888;
-$red: #f00;
-$deepRed: #cb1b01;
+$orange: #ee7419;
+$midorange: #f0a54f;
+$lightorange: #fcf0e5;
 .calendar-input-container {
   display: inline-block;
   position: relative;
@@ -18,102 +15,103 @@ $deepRed: #cb1b01;
   .fade-leave-active {
     opacity: 0;
   }
-    .calendar-input {
-      box-sizing: border-box;
-      width: 20rem;
-      height: 3rem;
-      padding: {
-        left: .5rem;
-        right: .5rem;
-      }
-      border: .1rem solid #ccc;
-      border-radius: 4%;
-      cursor: pointer;
-      outline: none;
-      transition: all .6s;
+  .calendar-input {
+    box-sizing: border-box;
+    width: 20rem;
+    height: 3rem;
+    padding: {
+      left: .5rem;
+      right: .5rem;
     }
-    #calendar {
-      position: absolute;
-      width: 20rem;
-      height: 24rem;
-      box-sizing: border-box;
-      border: .2rem solid #eee;
-      border-radius: 2%;
-      div, span {
+    border: .1rem solid #ccc;
+    border-radius: 4%;
+    background-color: #fff;
+    cursor: pointer;
+    outline: none;
+    transition: all .6s;
+  }
+  #calendar {
+    position: absolute;
+    width: 20rem;
+    height: 24rem;
+    box-sizing: border-box;
+    border: .2rem solid #eee;
+    border-radius: 2%;
+    background-color: #fff;
+    div, span {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    div {
+      height: 12.5%;
+      width: 100%;
+    }
+    span {        
+      height: 100%;
+      width: 14.2857%;
+    }
+    #calendar-header {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      span {
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
         align-items: center;
       }
-      div {
-        height: 12.5%;
-        width: 100%;
+      #date-box {
+        flex-grow: 2;
       }
-      span {        
+    }
+    .week {
+      box-sizing: border-box;
+      padding: .5rem;
+      font-size: 1.6rem;
+      span {
         height: 100%;
-        width: 14.2857%;
-      }
-
-      #calendar-header {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        span {
-          display: flex;
-          align-items: center;
-        }
-        #date-box {
-          flex-grow: 2;
-        }
-      }
-      .week {
-        box-sizing: border-box;
-        padding: .5rem;
-        font-size: 1.6rem;
-        span {
-          height: 100%;
-        }
-      }
-      .days {
-        box-sizing: border-box;
-        height: 75%;
-        padding: .5rem;
-        font-size: 1.4rem;
-        span {
-          height: 16.666667%;
-          cursor: pointer;
-          transition: all .5s;
-        }
-        .unselect {
-          cursor: default;
-        }
       }
     }
+    .days {
+      box-sizing: border-box;
+      height: 75%;
+      padding: .5rem;
+      font-size: 1.4rem;
+      span {
+        height: 16.666667%;
+        cursor: pointer;
+        transition: all .5s;
+      }
+      .unselect {
+        cursor: default;
+      }
+    }
+  }
 }
-.blue-theme {
+.orange-theme {
   .focus {
-    border-color: $blue;
-    box-shadow: 0 0 .5rem $blue;
+    border-color: $midorange;
+    box-shadow: 0 0 .5rem $midorange;
   }
   .arrow {
     cursor: pointer;
-    color: $deepBlue;
+    color: $orange;
     transition: color .5s;
     &:hover {
-      color: $blue;
+      color: $lightorange;
     }
   }
   .weekend {
-    color: $deepBlue;
+    color: $orange;
   }
   .days {
     span {
       &:hover {
         border-radius: .2rem;
-        background-color: $blue;
+        background-color: $midorange;
         color: #fff;       
       }
     }
@@ -126,45 +124,7 @@ $deepRed: #cb1b01;
     .select,
     .select:hover {
       border-radius: .2rem;
-      background-color: $deepBlue;
-      color: #fff;
-    }
-  }
-}
-.red-theme {
-  #calendar-header {
-    color: $white;
-    background-color: $deepRed;
-  }
-  .focus {
-    border-color: #ccc;
-    box-shadow: 0 0 .5rem #ccc;
-  }
-  .arrow {
-    cursor: pointer;
-  }
-    .weekend {
-    color: $deepRed;
-  }
-  .days {
-    color: $gray;
-    span {
-      &:hover {
-        border-radius: .2rem;
-        background-color: $red;
-        color: #fff;       
-      }
-    }
-    .unselect,
-    .unselect:hover {
-      border-radius: 0;
-      background-color: #fff;
-      color: #ccc;
-    }
-    .select,
-    .select:hover {
-      border-radius: .2rem;
-      background-color: $deepRed;
+      background-color: $orange;
       color: #fff;
     }
   }

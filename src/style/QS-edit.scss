@@ -1,0 +1,72 @@
+$orange: #ee7419;
+$lightorange: #fcf0e5;
+.edit-container {
+  width: 100rem;
+  margin: 5rem auto;
+  padding: 5rem;
+  color: #666;
+  background-color: #fff;
+  border-radius: .4rem;
+  box-shadow: 0 0 1rem #aaa;
+  h2 {
+    margin-bottom: 3rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #555;
+  }
+  .content {
+    padding: 3rem;
+    border: {
+      top: .2rem solid #ccc;
+      bottom: .2rem solid #ccc;
+    }
+  }
+  .add-item {
+    height: 10rem;
+    line-height: 10rem;
+    text-align: center;
+    background-color: #eee;
+    cursor: pointer;
+    > span {
+      font-size: 2rem;
+    }
+  }
+  footer {
+    position: relative;
+    height: 6rem;
+    margin-top: 3rem;
+    line-height: 6rem;
+    .btn-box {
+      position: absolute;
+      right: 2rem;
+      display: inline-block;
+    }
+    .save,
+    .issue {
+      width: 10rem;
+      height: 3rem;
+      padding: {
+        top: .3rem;
+        bottom: .3rem;
+      }
+      line-height: 100%;
+      color: #777;
+      border: .1rem solid #aaa;
+      border-radius: .2rem;
+      background-color: #fff;
+      cursor: pointer;
+    }
+    .save:hover {
+      box-shadow: 0 0 .5rem #aaa;
+    }
+    .issue {
+      margin-left: 4rem;
+      color: #fff;
+      border: .1rem solid $orange;
+      background-color: $orange;
+      &:hover {
+        box-shadow: 0 0 .5rem $orange;
+      }
+    }
+  }
+}
