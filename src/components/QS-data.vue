@@ -29,7 +29,7 @@
               </div>
               <span class="percent">85%</span>
           </div>
-          <div class="item-right" v-else-if="item.type === 'checkbox'">
+          <div class="item-right" v-else>
             <p>数据占比</p>
             <div :id="`chart-${item.num}`">
             </div>
@@ -177,7 +177,7 @@ import 'echarts/lib/component/toolbox'
       }
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'fetchData'
     }
   }
 </script>

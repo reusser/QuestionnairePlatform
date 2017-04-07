@@ -16,7 +16,7 @@
         <li>
           <button @click="iterator = edit(item); iterator.next()">编辑</button>
           <button @click="iterator = delItem(item.num); iterator.next()">删除</button>
-          <button>查看问卷</button>
+          <router-link :to="`/fill/${item.num}`" tag="button">查看问卷</router-link>
           <button @click="iterator = watchData(item); iterator.next()">查看数据</button>
         </li>
       </ul>
@@ -68,26 +68,44 @@ import storage from '../store.js'
       } else {
         storage.save([
 
-          {'num': 1, 'title': '第一份问卷', 'time': '2017-3-28', 'state': 'inissue', 'stateTitle': '发布中', 'checked': false, 
-          'question': [
-            {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'options': ['选项一', '选项二']},
-            {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'options': ['选项一', '选项二', '选项三', '选项四']},
-            {'num': 'Q3', 'title': '文本题', 'type': 'textarea'}
-          ]},
+          { 'num': 1, 
+            'title': '第一份问卷', 
+            'time': '2017-3-28', 
+            'state': 'inissue', 
+            'stateTitle': '发布中', 
+            'checked': false, 
+            'question': [
+              {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'isNeed': true, 'options': ['选项一', '选项二']},
+              {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'isNeed': true, 'options': ['选项一', '选项二', '选项三', '选项四']},
+              {'num': 'Q3', 'title': '文本题', 'type': 'textarea', 'isNeed': true}
+            ]
+          },
 
-          {'num': 2, 'title': '第二份问卷', 'time': '2017-3-29', 'state': 'noissue', 'stateTitle': '未发布', 'checked': false, 
-          'question': [
-            {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'options': ['选项一', '选项二']},
-            {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'options': ['选项一', '选项二', '选项三', '选项四']},
-            {'num': 'Q3', 'title': '文本题', 'type': 'textarea'}
-          ]},
+          { 'num': 2,
+            'title': '第二份问卷',
+            'time': '2017-3-29',
+            'state': 'noissue',
+            'stateTitle': '未发布',
+            'checked': false, 
+            'question': [
+              {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'isNeed': true, 'options': ['选项一', '选项二']},
+              {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'isNeed': true, 'options': ['选项一', '选项二', '选项三', '选项四']},
+              {'num': 'Q3', 'title': '文本题', 'type': 'textarea', 'isNeed': true}
+            ]
+          },
 
-          {'num': 3, 'title': '第三份问卷', 'time': '2017-3-27', 'state': 'issueed', 'stateTitle': '已发布', 'checked': false, 
-          'question': [
-            {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'options': ['选项一', '选项二']},
-            {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'options': ['选项一', '选项二', '选项三', '选项四']},
-            {'num': 'Q3', 'title': '文本题', 'type': 'textarea'}
-          ]}
+          { 'num': 3,
+            'title': '第三份问卷', 
+            'time': '2017-3-27', 
+            'state': 'issueed', 
+            'stateTitle': '已发布', 
+            'checked': false, 
+            'question': [
+              {'num': 'Q1', 'title': '单选题', 'type': 'radio', 'isNeed': true, 'options': ['选项一', '选项二']},
+              {'num': 'Q2', 'title': '多选题', 'type': 'checkbox', 'isNeed': true, 'options': ['选项一', '选项二', '选项三', '选项四']},
+              {'num': 'Q3', 'title': '文本题', 'type': 'textarea', 'isNeed': true}
+            ]
+          }
           
         ]);
         this.qsList = storage.get();
