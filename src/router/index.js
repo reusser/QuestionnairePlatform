@@ -8,7 +8,6 @@ import qsEdit from '@/components/QS-edit'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',
