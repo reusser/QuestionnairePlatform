@@ -165,5 +165,95 @@ $lightorange: #fcf0e5;
     height: 0;
     transform: translateY(-3rem);
   }
+  button {
+    width: 7rem;
+    height: 2.5rem;
+    padding: {
+      top: .3rem;
+      bottom: .3rem;
+    }
+    line-height: 100%;
+    color: #777;
+    border: 1px solid #555;
+    border-radius: .2rem;
+    background-color: #fff;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 5px #bbb;
+    }
+  }
+  .shadow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background: rgba(85, 85, 85, .7);
+    .add-qs-dialog {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 40rem;
+      height: 28rem;
+      transform: translateX(-50%) translateY(-50%);
+      border-radius: .5rem;
+      box-shadow: 0 0 5px #555;
+      background-color: #fff;
+    }
+    header {
+      height: 5rem;
+      padding: {
+        left: 3rem;
+        right: 3rem;
+      }
+      line-height: 5rem;
+      border-radius: .5rem;
+      background-color: #f7f7f7;
+      span:nth-of-type(1) {
+        font-weight: 700;
+      }
+      .close-btn {
+        position: absolute;
+        right: 3rem;
+        color: #bbb;
+        cursor: pointer;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+    .add-qs-dialog p {
+      margin: 3rem 0 2rem 3rem;
+    }
+    label {
+      display: block;
+      margin-left: 3rem;
+      margin-bottom: 2rem;
+      &:nth-of-type(2) {
+        margin-left: 5.7rem;
+      }
+      input {
+        margin-left: 1rem;
+      }
+    }
+    .btn-box {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 6rem;
+      text-align: center;
+      line-height: 6rem;
+      .yes {
+        margin-right: 1rem;
+        color: #fff;
+        background-color: $orange;
+        border: 1px solid $orange;
+        &:hover {
+          box-shadow: 0 0 5px $orange;
+        }
+      }
+    }
+  }
 }
 
