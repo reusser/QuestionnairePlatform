@@ -9,10 +9,25 @@ $lightorange: #fcf0e5;
   border-radius: .4rem;
   box-shadow: 0 0 1rem #aaa;
   h2 {
+    height: 6rem;
     margin-bottom: 3rem;
+    line-height: 6rem;
     text-align: center;
     font-size: 2rem;
     color: #555;
+    cursor: pointer;
+    &:hover {
+      background-color: $lightorange;
+    }
+  }
+  input[name="qsTitle"] {
+    height: 6rem;
+    width: 100%;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    background-color: #ccc;
   }
   .content {
     padding: 3rem;
@@ -21,14 +36,84 @@ $lightorange: #fcf0e5;
       bottom: .2rem solid #ccc;
     }
   }
+  .questions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    &:hover {
+      background-color: $lightorange;
+    }
+      p {
+        margin: {
+          top: 1.5rem;
+          bottom: 1.5rem;
+        }
+      }
+      textarea {
+        width: 35rem;
+        height: 15rem;
+        margin-left: 2.5rem;
+      }
+    .qs-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #333;
+    }
+    .option {
+      margin-left: 2.5rem;
+    }
+    .qs-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 20rem;
+      label {
+        margin: {
+          top: 2rem;
+          bottom: 2rem;
+        }
+      }
+      p {
+        bottom: 1rem;
+        span {
+          cursor: pointer;
+          &:hover {
+            color: $orange;
+          }
+        }
+      }
+    }
+  }
+  .add {
+    border: .2rem solid #ccc;
+  }
+  .add-option {
+    height: 8rem;
+    line-height: 8rem;
+    text-align: center;
+    button {
+      height: 3rem;
+      width: 8rem;
+      margin-left: 4rem;
+      border: .2rem solid #ccc;
+      background-color: #eee;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0 .4rem #aaa;
+      }
+    }
+  }
   .add-item {
-    height: 10rem;
-    line-height: 10rem;
+    height: 8rem;
+    line-height: 8rem;
     text-align: center;
     background-color: #eee;
     cursor: pointer;
     > span {
-      font-size: 2rem;
+      font-size: 1.6rem;
     }
   }
   footer {
@@ -69,4 +154,16 @@ $lightorange: #fcf0e5;
       }
     }
   }
+  .slide-enter-active, .slide-leave-active {
+    transition: all .5s;
+  }
+  .slide-enter-active {
+    height: 8rem;
+  }
+  .slide-enter, .slide-leave-active {
+    opacity: 0;
+    height: 0;
+    transform: translateY(-3rem);
+  }
 }
+
