@@ -3,9 +3,9 @@
     <ul v-if="qsList.length == 0 ? false : true">
       <li></li>
       <li>标题</li>
-      <li>时间</li>
+      <li>截止时间</li>
       <li>状态</li>
-      <li>操作<span>+新建问卷</span></li>
+      <li>操作<span @click="$router.push({name: 'qsEdit', params: {num: 0}})">+新建问卷</span></li>
     </ul>
     <template v-for="item in qsList">
       <ul>
@@ -26,7 +26,8 @@
       <button @click="iterator = delItems(); iterator.next()">删除</button>
     </div>
       <div class="add-qs" v-if="qsList.length === 0">
-        <button class="add-btn">+&nbsp;&nbsp;新建问卷</button>
+        <button class="add-btn" 
+        @click="$router.push({name: 'qsEdit', params: {num: 0}})">+&nbsp;&nbsp;新建问卷</button>
       </div>
     <div class="shadow" v-if="showDialog">
       <div class="del-dialog">
@@ -63,14 +64,30 @@ import storage from '../store.js'
       }
     },
     mounted() {
-      if (storage.get().length > 0) {
+      if (storage.get() !== null) {
         this.qsList = storage.get();
+        this.qsList.forEach( item => {
+          let [year, month, day] = item.time.split('-')
+          if (year < new Date().getFullYear()) {
+            item.state = 'issueed'
+            item.stateTitle = '已发布'
+          } else if (year == new Date().getFullYear() 
+            && month < new Date().getMonth() + 1) {
+            item.state = 'issueed'
+            item.stateTitle = '已发布'
+          } else if (year == new Date().getFullYear() 
+            && month == new Date().getMonth() + 1 
+            && day < new Date().getDate()) {
+            item.state = 'issueed'
+            item.stateTitle = '已发布'
+          }
+        })
       } else {
         storage.save([
 
           { 'num': 1, 
             'title': '第一份问卷', 
-            'time': '2017-3-28', 
+            'time': '2030-1-1', 
             'state': 'inissue', 
             'stateTitle': '发布中', 
             'checked': false, 
@@ -83,7 +100,7 @@ import storage from '../store.js'
 
           { 'num': 2,
             'title': '第二份问卷',
-            'time': '2017-3-29',
+            'time': '2030-1-1',
             'state': 'noissue',
             'stateTitle': '未发布',
             'checked': false, 
@@ -202,6 +219,9 @@ import storage from '../store.js'
     watch: {
       qsList: {
         handler(val) {
+          val.forEach( (item, index) => {
+            item.num = index + 1
+          } )
           storage.save(val);
         },
         deep: true

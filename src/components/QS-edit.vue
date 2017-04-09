@@ -66,12 +66,29 @@
         </div>
       </div>
     </div>
+    <div class="shadow" v-if="showDialog">
+      <div class="dialog">
+        <header>
+          <span>提示</span>
+          <span class="close-btn" @click="cancel">X</span>
+        </header>
+        <p>{{info}}</p>
+        <div class="btn-box">
+          <button class="yes" @click="iterator.next()">确定</button>
+          <button @click="cancel">取消</button>
+        </div>
+      </div>
+    </div>
     <footer>
       <span>问卷截止日期</span>
-      <calendar-input :showCalendar="false" :limit="qsItem.date"></calendar-input>
+      <calendar-input 
+      :showCalendar="false" 
+      :limit="limit" 
+      @getValue="getValue">
+      </calendar-input>
       <div class="btn-box">
-        <button class="save">保存问卷</button>
-        <button class="issue">发布问卷</button>
+        <button class="save" @click="iterator = save(); iterator.next()">保存问卷</button>
+        <button class="issue" @click="iterator = issueQs(); iterator.next()">发布问卷</button>
       </div>
     </footer>
   </div>
@@ -102,7 +119,39 @@ export default {
       showAddOptionInput: true,
       qsInputTitle: '',
       qsInputOptions: [],
-      info: ''
+      info: '',
+      selectTime: '',
+      addOptionType: '',
+      limit: {},
+      showDialog: false,
+      iterator: {},
+      isGoIndex: false
+    }
+  },
+  beforeRouteEnter(to, from ,next) {
+    let num = to.params.num
+    let theItem = {}
+    if (num != 0) {
+      let length = storage.get().length
+      if (num < 0 || num > length) {
+        alert('非法路由!')
+        next('/')
+      } else {
+        for (let i = 0; i < length; i++) {
+          if (storage.get()[i].num == num) {
+            theItem = storage.get()[i]
+            break
+          }
+        }
+      }
+      if (theItem.state === 'noissue') {
+        next()
+      } else {
+        alert('非法路由')
+        next('/')
+      }
+    } else {
+      next()
     }
   },
   created() {
@@ -110,9 +159,7 @@ export default {
   },
   methods: {
     fetchData() {
-      if (this.$route.params.num == 0) {
-        this.qsItem.title = '这里是标题'
-        this.qsItem.date  = { 
+      this.limit = { 
           minYear: new Date().getFullYear(),
           minMonth: new Date().getMonth() + 1,
           minDay: new Date().getDate(),
@@ -120,7 +167,17 @@ export default {
           maxMonth: 3,
           maxDay: 20
         }
-        this.qsItem.question = []
+      if (this.$route.params.num == 0) {
+        let item = {}
+        item.num        = this.qsList.length + 1
+        item.title      = '这里是标题'
+        item.time       = ''
+        item.state      = 'noissue'
+        item.question   = []
+        item.stateTitle = '未发布'
+        item.checked    = false
+        this.qsItem = item
+        this.qsList.push(this.qsItem)
       } else {
         let i = 0
         for (let length = this.qsList.length; i < length; i++) {
@@ -195,14 +252,17 @@ export default {
     addRadio() {
       if (this.questionLength === 10) return alert('问卷已满！')
       this.showAddDialog('分别在下面的输入框中输入问题的名称以及选项, 选项用半角逗号","分隔开', true)
+      this.addOptionType = 'radio'
     },
     addCheckbox() {
       if (this.questionLength === 10) return alert('问卷已满！')
       this.showAddDialog('分别在下面的输入框中输入问题的名称以及选项, 选项用半角逗号","分隔开', true)
+      this.addOptionType = 'checkbox'
     },
     addTextarea() {
       if (this.questionLength === 10) return alert('问卷已满！')
       this.showAddDialog('在输入框中输入问题名称', false)
+      this.addOptionType = 'textarea' 
     },
     validateAddQs() {
       let qsTitle = this.qsInputTitle.trim()
@@ -216,9 +276,68 @@ export default {
             return alert('存在某个选项内容为空')
           }
         }
-        //sucess
+        this.qsItem.question.push({
+          'num': this.qsItem.question.length - 1, 
+          'title': qsTitle, 
+          'type': this.addOptionType,
+          'isNeed': true,
+          'options':qsOptions
+        })
+        this.showAddQsDialog = false
       } else {
-        //success
+        this.qsItem.question.push({
+          'num': this.qsItem.question.length - 1,
+          'title': qsTitle,
+          'type': 'textarea',
+          'isNeed': true
+        })
+        this.showAddQsDialog = false
+      }
+    },
+    getValue(selectTime) {
+      this.selectTime = selectTime
+      this.qsItem.time = this.selectTime
+    },
+    *save() {
+      this.showDialog = true
+      this.info = '确认保存?'
+      yield
+      if (this.qsItem.question.length === 0) {
+        this.showDialog = false
+        alert('问卷为空无法保存')
+      } else {
+        storage.save(this.qsList)
+        this.info = '是否发布?'
+        this.isGoIndex = true
+      }
+      
+      yield
+      this.qsItem.state = 'inissue'
+      this.qsItem.stateTitle = '发布中'
+      storage.save(this.qsList)
+      this.showDialog = false
+      this.$router.push({path:'/'})
+    },
+    *issueQs() {
+      this.showDialog = true
+      this.info = '确认发布?'
+      yield
+      if (this.qsItem.question.length === 0) {
+        this.showDialog = false
+        alert('问卷为空无法保存')
+      } else {
+        this.qsItem.state = 'inissue'
+        this.qsItem.stateTitle = '发布中'
+        storage.save(this.qsList)
+        this.showDialog = false
+        this.$router.push({path:'/'})
+      }
+      
+    },
+    cancel() {
+      this.showDialog = false
+      if (this.isGoIndex === true) {
+        this.$router.push({path:'/'})
       }
     }
   },
